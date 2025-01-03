@@ -46,18 +46,6 @@
         th {
             background-color: #f2f2f2;
         }
-        .add-button {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .add-button:hover {
-            background-color: #45a049;
-        }
         .popup-form {
             display: none;
             position: fixed;
@@ -177,7 +165,6 @@
             <input type="date" id="endDate" onchange="applyFiltersAndSearch()">
         </div>
 
-        <a href="#" class="add-button" onclick="openForm()">Add New Paper</a>
         <table>
             <thead>
                 <tr>
@@ -185,7 +172,6 @@
                     <th>Website Link</th>
                     <th>Submission Deadline</th>
                     <th>Time Left</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody id="papers-table-body">
@@ -217,7 +203,11 @@
     </footer>
 
     <script>
-        let papers = JSON.parse(localStorage.getItem("papers")) || [];
+        let papers = [
+            { conference: "LAD 2025", website: "https://www.islad.com", deadline: "2025-02-28T23:59:59" },
+            { conference: "ISEDA 2025", website: "https://www.eda2.com/iseda/index.html", deadline: "2025-02-10T23:59:59" },
+            { conference: "DATE 2025", website: "https://www.date-conference.com", deadline: "2024-09-15T23:59:59" }
+        ];
         let editingIndex = null;
         let filteredPapers = papers;
         let currentPage = 1;
@@ -286,13 +276,6 @@
                 const rowElement = document.createElement('tr');
                 rowElement.innerHTML = row;
                 rowElement.appendChild(timeLeftElement);
-    
-                const actionCell = `
-                    <td>
-                        <button onclick="editPaper(${index + startIndex})">Edit</button>
-                        <button onclick="deletePaper(${index + startIndex})">Delete</button>
-                    </td>`;
-                rowElement.innerHTML += actionCell;
     
                 tableBody.appendChild(rowElement);
             });
